@@ -64,7 +64,7 @@ def phases_permit_new_job(phases, d, sched_cfg, dir_cfg):
     tmp_overrides = dir_cfg['tmp_overrides']
     if tmp_overrides is not None and d in tmp_overrides:
         overrides = tmp_overrides[d]
-        if 'max_plots' in overrides:
+        if 'tmpdir_max_jobs' in overrides:
             max_plots = overrides['tmpdir_max_jobs']
     if len(phases) >= max_plots:
 >>>>>>> b4951f7... Allow a different number of plots per tmp dir
