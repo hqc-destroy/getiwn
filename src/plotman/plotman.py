@@ -1,26 +1,23 @@
 #!/usr/bin/env python3
 
+import argparse
+import os
+import random
+import re
+import readline  # For nice CLI
+import sys
+import threading
+import time
 from datetime import datetime
 from subprocess import call
 
-import argparse
-import os
-import re
-import threading
-import random
-import readline          # For nice CLI
-import sys
-import time
 import yaml
 
 # Plotman libraries
-from job import Job
-import analyzer
-import archive
-import interactive
-import manager
-import plot_util
-import reporting
+from plotman import (analyzer, archive, interactive, manager, plot_util,
+                     reporting)
+from plotman.job import Job
+
 
 class PlotmanArgParser:
     def add_idprefix_arg(self, subparser):
@@ -85,7 +82,7 @@ def get_term_width():
         columns = 120  # 80 is typically too narrow.  TODO: make a command line arg.
     return columns
 
-if __name__ == "__main__":
+def main():
     random.seed()
 
     pm_parser = PlotmanArgParser()
@@ -208,3 +205,5 @@ if __name__ == "__main__":
                     print('Resuming ' + job.plot_id)
                     job.resume()
 
+if __name__ == "__main__":
+    main()

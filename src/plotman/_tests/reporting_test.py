@@ -1,11 +1,15 @@
 # TODO: migrate away from unittest patch
-from unittest.mock import patch
-
 import os
+from unittest.mock import patch
 
 import reporting
 
+<<<<<<< HEAD
 def test_phases_str_basic():
+=======
+
+def test_phases_str():
+>>>>>>> 18e771a... cleaning up imports with isort
     assert(reporting.phases_str([(1,2), (2,3), (3,4), (4,0)]) ==
             '1:2 2:3 3:4 4:0')
 
