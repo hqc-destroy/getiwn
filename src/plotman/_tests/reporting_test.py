@@ -2,7 +2,7 @@
 import os
 from unittest.mock import patch
 
-import reporting
+from plotman import reporting
 
 <<<<<<< HEAD
 def test_phases_str_basic():
