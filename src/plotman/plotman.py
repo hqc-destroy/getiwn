@@ -203,6 +203,3 @@ def main():
                 elif args.cmd == 'resume':
                     print('Resuming ' + job.plot_id)
                     job.resume()
-
-if __name__ == "__main__":
-    main()
