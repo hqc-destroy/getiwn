@@ -64,9 +64,17 @@ def curses_main(stdscr):
 <<<<<<< HEAD
     # TODO: figure out how to pass the configs in from plotman.py instead of
     # duplicating the code here.
+<<<<<<< HEAD
     with open('config.yaml', 'r') as ymlfile:
+<<<<<<< HEAD
 <<<<<<< HEAD:src/plotman/interactive.py
         cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
+=======
+=======
+    with open(configuration.get_path(), 'r') as ymlfile:
+>>>>>>> a61bf9e... refactor: centralize configuration path location definition
+        cfg = configuration.load(ymlfile)
+>>>>>>> 0034f10... refactor: add configuration.load()
     ui_cfg = cfg['user_interface']
 =======
         cfg = yaml.load(ymlfile, Loader=yaml.SafeLoader)

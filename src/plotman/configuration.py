@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
@@ -64,3 +65,17 @@ class PlotmanConfig:
     directories: Directories
     scheduling: Scheduling
     plotting: Plotting
+=======
+import yaml
+
+
+def get_path():
+    return 'config.yaml'
+
+def load(file):
+    cfg = yaml.load(file, Loader=yaml.FullLoader)
+<<<<<<< HEAD
+>>>>>>> 0034f10... refactor: add configuration.load()
+=======
+    return cfg
+>>>>>>> 4a6fd70... fix: actually return from configuration.load()

@@ -29,7 +29,7 @@ class PlotmanArgParser:
         sp.add_parser('version', help='print the version')
 
         sp.add_parser('status', help='show current plotting status')
- 
+
         sp.add_parser('dirs', help='show directories info')
 
         sp.add_parser('interactive', help='run interactive control/monitoring mode')
@@ -88,7 +88,11 @@ def main():
         print(pkg_resources.get_distribution('plotman'))
         return
 
-    cfg = configuration.get_validated_configs()
+    with open(configuration.get_path(), 'r') as ymlfile:
+        cfg = configuration.load(ymlfile)
+    dir_cfg = cfg['directories']
+    sched_cfg = cfg['scheduling']
+    plotting_cfg = cfg['plotting']
 
     #
     # Stay alive, spawning plot jobs
@@ -157,7 +161,7 @@ def main():
         elif args.cmd == 'dsched':
             for (d, ph) in manager.dstdirs_to_furthest_phase(jobs).items():
                 print('  %s : %s' % (d, str(ph)))
-        
+
         #
         # Job control commands
         #
