@@ -66,8 +66,12 @@ def curses_main(stdscr):
     # TODO: figure out how to pass the configs in from plotman.py instead of
     # duplicating the code here.
     with open('config.yaml', 'r') as ymlfile:
+<<<<<<< HEAD:src/plotman/interactive.py
         cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
     ui_cfg = cfg['user_interface']
+=======
+        cfg = yaml.load(ymlfile, Loader=yaml.SafeLoader)
+>>>>>>> 598e6c9... use yaml.SafeLoader:interactive.py
     dir_cfg = cfg['directories']
     sched_cfg = cfg['scheduling']
     plotting_cfg = cfg['plotting']
