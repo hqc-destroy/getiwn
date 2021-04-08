@@ -117,8 +117,12 @@ def main():
     # Analysis of completed jobs
     #
     elif args.cmd == 'analyze':
+<<<<<<< HEAD
         log_analyzer = analyzer.LogAnalyzer()
         log_analyzer.analyze(args.logfile, args.bytmp, args.bybitfield)
+=======
+        analyzer.LogAnalyzer.analyze(args.logfile, args.bytmp, args.bybitfield)
+>>>>>>> 5de2164... Fix #87
 
     else:
         # print('...scanning process tables')
