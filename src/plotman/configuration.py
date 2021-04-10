@@ -6,24 +6,22 @@ import desert
 import yaml
 
 
-<<<<<<< HEAD
-=======
+
 def get_path():
-    return "config.yaml"
->>>>>>> 15afde3... Respond to review
+
 
 def get_validated_configs():
-    """Return a validated instance of the PlotmanConfig dataclass with data from config.yaml."""
+    """Return a validated instance of the PlotmanConfig dataclass with data from plotman.yaml."""
     schema = desert.schema(PlotmanConfig)
     try:
         with open(get_path(), "r") as file:
             config_file = yaml.load(file, Loader=yaml.SafeLoader)
             return schema.load(config_file)
     except FileNotFoundError:
-        print("No config.yaml file present in current working directory")
+        print("No plotman.yaml file present in current working directory")
 
 
-# Data models used to deserializing/formatting config.yaml files.
+# Data models used to deserializing/formatting plotman.yaml files.
 
 @dataclass
 class Archive:
@@ -35,12 +33,16 @@ class Archive:
     index: int = 0  # If not explicit, "index" will default to 0
 
 @dataclass
+class TmpOverrides:
+    tmpdir_max_jobs: Optional[int] = None
+
+@dataclass
 class Directories:
     log: str
     tmp: List[str]
     dst: List[str]
     tmp2: Optional[str] = None
-    tmp_overrides: Optional[Dict[str, Dict[str, int]]] = None
+    tmp_overrides: Optional[Dict[str, TmpOverrides]] = None
     archive: Optional[Archive] = None
 
 @dataclass

@@ -96,8 +96,6 @@ def curses_main(stdscr):
     plotting_status = '<startup>'    # todo rename these msg?
     archiving_status = '<startup>'
 
-    refresh_period = int(cfg.scheduling.polling_time_s)
-
     stdscr.nodelay(True)  # make getch() non-blocking
     stdscr.timeout(2000)
 
@@ -125,7 +123,7 @@ def curses_main(stdscr):
             do_full_refresh = True
         else:
             elapsed = (datetime.datetime.now() - last_refresh).total_seconds() 
-            do_full_refresh = elapsed >= refresh_period
+            do_full_refresh = elapsed >= cfg.scheduling.polling_time_s
 
         if not do_full_refresh:
             jobs = Job.get_running_jobs(cfg.directories.log, cached_jobs=jobs)
@@ -264,7 +262,7 @@ def curses_main(stdscr):
         # Header
         header_win.addnstr(0, 0, 'Plotman', linecap, curses.A_BOLD)
         timestamp = datetime.datetime.now().strftime("%H:%M:%S")
-        refresh_msg = "now" if do_full_refresh else f"{int(elapsed)}s/{refresh_period}"
+        refresh_msg = "now" if do_full_refresh else f"{int(elapsed)}s/{cfg.scheduling.polling_time_s}"
         header_win.addnstr(f" {timestamp} (refresh {refresh_msg})", linecap)
         header_win.addnstr('  |  <P>lotting: ', linecap, curses.A_BOLD)
         header_win.addnstr(

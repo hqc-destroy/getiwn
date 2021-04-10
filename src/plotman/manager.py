@@ -76,9 +76,14 @@ def phases_permit_new_job(phases, d, sched_cfg, dir_cfg):
     max_plots = sched_cfg.tmpdir_max_jobs
     if dir_cfg.tmp_overrides is not None and d in dir_cfg.tmp_overrides:
         curr_overrides = dir_cfg.tmp_overrides[d]
+<<<<<<< HEAD
         if "tmpdir_max_jobs" in curr_overrides:
             max_plots = curr_overrides["tmpdir_max_jobs"]
 >>>>>>> 5acc58e... Add validation and fix test
+=======
+        if curr_overrides.tmpdir_max_jobs is not None:
+            max_plots = curr_overrides.tmpdir_max_jobs
+>>>>>>> 9803330... Fix test, create TmpOverrides dataclass
     if len(phases) >= max_plots:
 >>>>>>> b4951f7... Allow a different number of plots per tmp dir
         return False
