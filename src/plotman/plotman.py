@@ -11,10 +11,14 @@ from subprocess import call
 
 # Plotman libraries
 from plotman import analyzer, archive, configuration, interactive, manager, plot_util, reporting
+<<<<<<< HEAD
+=======
+from plotman import resources as plotman_resources
+>>>>>>> fcb9942... Nits
 from plotman.job import Job
 
 
-class PlotmanArgParser:
+class PlotmanArgParser:s
     def add_idprefix_arg(self, subparser):
         subparser.add_argument(
                 'idprefix',
@@ -38,7 +42,12 @@ class PlotmanArgParser:
 
         sp.add_parser('plot', help='run plotting loop')
 
-        p_archive = sp.add_parser('archive', help='move completed plots to farming location')
+        sp.add_parser('archive', help='move completed plots to farming location')
+
+        p_config = sp.add_parser('config', help='display or generate plotman.yaml configuration')
+        sp_config = p_config.add_subparsers(dest='config_subcommand')
+        sp_config.add_parser('generate', help='generate a default plotman.yaml file and print path')
+        sp_config.add_parser('show', help='show path to current plotman.yaml file')
 
         p_details = sp.add_parser('details', help='show details for job')
         self.add_idprefix_arg(p_details)
@@ -55,7 +64,17 @@ class PlotmanArgParser:
         p_resume = sp.add_parser('resume', help='resume suspended job')
         self.add_idprefix_arg(p_resume)
 
+<<<<<<< HEAD
         p_analyze = sp.add_parser('analyze', help='analyze timing stats of completed jobs')
+=======
+        p_analyze = sp.add_parser('analyze',
+                help='analyze timing stats of completed jobs')
+        p_analyze.add_argument('--clipterminals',
+                action='store_true',
+                help='Ignore first and last plot in a logfile, useful for '
+                     'focusing on the steady-state in a staggered parallel '
+                     'plotting test (requires plotting  with -n>2)')
+>>>>>>> 17cde47... feat: add option to skip terminal jobs in analyze
         p_analyze.add_argument('--bytmp',
                 action='store_true',
                 help='slice by tmp dirs')
@@ -114,7 +133,9 @@ def main():
     elif args.cmd == 'analyze':
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         log_analyzer = analyzer.LogAnalyzer()
+<<<<<<< HEAD
         log_analyzer.analyze(args.logfile, args.bytmp, args.bybitfield)
 =======
         analyzer.LogAnalyzer.analyze(args.logfile, args.bytmp, args.bybitfield)
@@ -130,6 +151,13 @@ def main():
 >>>>>>> 5acc58e... Add validation and fix test
 =======
 >>>>>>> fcb5c9e... Nits
+=======
+        log_analyzer.analyze(args.logfile, args.clipterminals,
+=======
+        analyzer.analyze(args.logfile, args.clipterminals,
+>>>>>>> f1a77d7... fix: undo some mistaken merge conflict resolves
+                args.bytmp, args.bybitfield)
+>>>>>>> 17cde47... feat: add option to skip terminal jobs in analyze
 
     else:
         jobs = Job.get_running_jobs(cfg.directories.log)
