@@ -18,7 +18,7 @@ from plotman import resources as plotman_resources
 from plotman.job import Job
 
 
-class PlotmanArgParser:s
+class PlotmanArgParser:
     def add_idprefix_arg(self, subparser):
         subparser.add_argument(
                 'idprefix',
@@ -107,11 +107,48 @@ def main():
         print(pkg_resources.get_distribution('plotman'))
         return
 
+<<<<<<< HEAD
     with open(configuration.get_path(), 'r') as ymlfile:
         cfg = configuration.load(ymlfile)
     dir_cfg = cfg['directories']
     sched_cfg = cfg['scheduling']
     plotting_cfg = cfg['plotting']
+=======
+    elif args.cmd == 'config':
+        config_file_path = configuration.get_path()
+        if args.config_subcommand == 'show':
+            if os.path.isfile(config_file_path):
+                return config_file_path
+            return (
+                f"No 'plotman.yaml' file exists at expected location: '{config_file_path}'. To generate "
+                f"default config file, run: 'plotman config generate'"
+            )
+        if args.config_subcommand == 'generate':
+            if os.path.isfile(config_file_path):
+                overwrite = None
+                while overwrite not in {"y", "n"}:
+                    overwrite = input(
+                        f"A 'plotman.yaml' file already exists at the default location: '{config_file_path}' \n\n"
+                        "\tInput 'y' to overwrite existing file, or 'n' to exit without overwrite."
+                      ).lower()
+                    if overwrite == 'n':
+                        return "\nExited without overrwriting file"
+
+            # Copy the default plotman.yaml (packaged in plotman/resources/) to the user's config file path,
+            # creating the parent plotman/ directory if it does not yet exist
+            config_directory_path = configuration.get_directory_path()
+            with importlib.resources.path(plotman_resources, "plotman.yaml") as default_config:
+                if not os.path.isdir(config_directory_path):
+                    os.mkdir(config_directory_path)
+
+                copyfile(default_config, config_file_path)
+                return f"\nWrote default plotman.yaml to: {config_file_path}"
+
+        if not args.config_subcommand:
+            return "No action requested, add 'generate' or 'show'."
+
+    cfg = configuration.get_validated_configs()
+>>>>>>> 99ad50d... User lower() and while loop
 
     #
     # Stay alive, spawning plot jobs
