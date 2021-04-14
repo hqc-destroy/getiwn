@@ -17,8 +17,23 @@ def get_validated_configs():
         with open(get_path(), "r") as file:
             config_file = yaml.load(file, Loader=yaml.SafeLoader)
             return schema.load(config_file)
+<<<<<<< HEAD
     except FileNotFoundError:
         print("No plotman.yaml file present in current working directory")
+=======
+    except FileNotFoundError as e:
+        raise ConfigurationException(
+            f"No 'plotman.yaml' file exists at expected location: '{config_file_path}'. To generate "
+            f"default config file, run: 'plotman config generate'"
+        ) from e
+<<<<<<< HEAD
+    except marshmallow.exceptions.ValidationError:
+        raise ConfigurationException(f"Config file at: '{config_file_path}' is malformed")
+>>>>>>> 277829e... Update src/plotman/configuration.py
+=======
+    except marshmallow.exceptions.ValidationError as e:
+        raise ConfigurationException(f"Config file at: '{config_file_path}' is malformed") from e
+>>>>>>> 1901478... Update src/plotman/configuration.py
 
 
 # Data models used to deserializing/formatting plotman.yaml files.
