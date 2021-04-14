@@ -6,8 +6,18 @@ import desert
 import yaml
 
 
+<<<<<<< HEAD
 
 def get_path():
+=======
+class ConfigurationException(Exception):
+    """Raised when plotman.yaml configuration is missing or malformed."""
+
+
+def get_path():
+    """Return path to where plotman.yaml configuration file should exist."""
+    return appdirs.user_config_dir("plotman") + "/plotman.yaml"
+>>>>>>> 52d15fb... Review v2
 
 
 def get_validated_configs():
