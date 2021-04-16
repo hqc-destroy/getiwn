@@ -53,6 +53,39 @@ def parse_chia_plot_time(s):
     # This will grow to try ISO8601 as well for when Chia logs that way
     return pendulum.from_format(s, 'ddd MMM DD HH:mm:ss YYYY', locale='en', tz=None)
 
+class ParsedChiaPlotsCreateCommand:
+    def __init__(self, help, parameters):
+        self.help = help
+        self.parameters = parameters
+
+def parse_chia_plots_create_command_line(command_line):
+    # Parse command line args
+    assert len(command_line) >= 4
+    assert 'python' in command_line[0]
+    assert 'chia' in command_line[1]
+    assert 'plots' == command_line[2]
+    assert 'create' == command_line[3]
+
+    all_command_arguments = command_line[4:]
+
+    # nice idea, but this doesn't include -h
+    # help_option_names = command.get_help_option_names(ctx=context)
+    help_option_names = {'--help', '-h'}
+
+    command_arguments = [
+        argument
+        for argument in all_command_arguments
+        if argument not in help_option_names
+    ]
+
+    command = chia.cmds.plots.create_cmd
+    context = command.make_context(info_name='', args=list(command_arguments))
+
+    return ParsedChiaPlotsCreateCommand(
+        help=len(all_command_arguments) > len(command_arguments),
+        parameters=context.params,
+    )
+
 # TODO: be more principled and explicit about what we cache vs. what we look up
 # dynamically from the logfile
 class Job:
@@ -94,7 +127,9 @@ class Job:
         self.proc = proc
 
         with self.proc.oneshot():
+<<<<<<< HEAD
             # Parse command line args
+<<<<<<< HEAD
             args = self.proc.cmdline()
             assert len(args) > 4
             assert 'python' in args[0]
@@ -135,8 +170,45 @@ class Job:
                 self.help = True
             else:
                 self.help = False
+=======
+            command_line = self.proc.cmdline()
+            assert len(command_line) > 4
+            assert 'python' in command_line[0]
+            assert 'chia' in command_line[1]
+            assert 'plots' == command_line[2]
+            assert 'create' == command_line[3]
 
-            self.args = chia.cmds.plots.create_cmd.make_context(info_name='', args=args[4:]).params
+            # nice idea, but this doesn't include -h
+            # help_option_names = command.get_help_option_names(ctx=context)
+            help_option_names = {'--help', '-h'}
+
+<<<<<<< HEAD
+            self.help = any(
+                argument in help_option_names for argument in command_arguments
+            )
+>>>>>>> 4c8f200... fix: handle -h as well
+=======
+            all_command_arguments = command_line[4:]
+            command_arguments = [
+                argument
+                for argument in all_command_arguments
+                if argument not in help_option_names
+            ]
+
+            self.help = len(all_command_arguments) > len(command_arguments)
+
+            command = chia.cmds.plots.create_cmd
+            context = command.make_context(info_name='', args=command_arguments)
+>>>>>>> f3114a5... fix: get defaults back
+
+            self.args = context.params
+=======
+            parsed_command = parse_chia_plots_create_command_line(
+                command_line=self.proc.cmdline(),
+            )
+            self.help = parsed_command.help
+            self.args = parsed_command.parameters
+>>>>>>> 8dde509... refactor: isolate chia cli parsing and test it
 
             # an example as of 1.0.5
             # {
@@ -177,7 +249,7 @@ class Job:
 >>>>>>> af115b6... Use chia's own 'chia plots create' argument parser
 =======
             self.tmpdir = os.path.join(plot_cwd, self.tmpdir)
-            if self.tmp2dir != '':
+            if self.tmp2dir is not None:
                 self.tmp2dir = os.path.join(plot_cwd, self.tmp2dir)
             self.dstdir = os.path.join(plot_cwd, self.dstdir)
 >>>>>>> be7c4e5... Change less
