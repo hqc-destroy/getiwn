@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from dataclasses import dataclass
+=======
+from dataclasses import dataclass, field
+>>>>>>> 18cd480... fix: make user_interface configuration optional
 from typing import Dict, List, Optional
 
 import desert
@@ -92,14 +96,14 @@ class Plotting:
 
 @dataclass
 class UserInterface:
-    use_stty_size: bool
+    use_stty_size: bool = True
 
 @dataclass
 class PlotmanConfig:
-    user_interface: UserInterface
     directories: Directories
     scheduling: Scheduling
     plotting: Plotting
+<<<<<<< HEAD
 =======
 import yaml
 
@@ -114,3 +118,6 @@ def load(file):
 =======
     return cfg
 >>>>>>> 4a6fd70... fix: actually return from configuration.load()
+=======
+    user_interface: UserInterface = field(default_factory=UserInterface)
+>>>>>>> 18cd480... fix: make user_interface configuration optional
