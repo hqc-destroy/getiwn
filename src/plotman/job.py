@@ -153,7 +153,7 @@ class Job:
 <<<<<<< HEAD
             args = self.proc.cmdline()
             assert len(args) > 4
-            assert 'python' in args[0]
+            assert 'python' in args[0].lower()
             assert 'chia' in args[1]
             assert 'plots' == args[2]
             assert 'create' == args[3]
