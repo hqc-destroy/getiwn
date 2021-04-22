@@ -26,28 +26,22 @@ def job_phases_for_dstdir(d, all_jobs):
     return sorted([j.progress() for j in all_jobs if j.dstdir == d])
 
 def is_plotting_cmdline(cmdline):
+    if cmdline and 'python' in cmdline[0]:
+        cmdline = cmdline[1:]
     return (
+<<<<<<< HEAD
         len(cmdline) >= 4
         and 'python' in cmdline[0].lower()
         and cmdline[1].endswith('/chia')
         and 'plots' == cmdline[2]
         and 'create' == cmdline[3]
+=======
+        len(cmdline) >= 3
+        and cmdline[0].endswith("chia")
+        and 'plots' == cmdline[1]
+        and 'create' == cmdline[2]
+>>>>>>> 1112b3d... add support for chia installed via macOS dmg installer
     )
-
-# This is a cmdline argument fix for https://github.com/ericaltendorf/plotman/issues/41
-def cmdline_argfix(cmdline):
-    known_keys = 'krbut2dne'
-    for i in cmdline:
-        # If the argument starts with dash and a known key and is longer than 2,
-        # then an argument is passed with no space between its key and value.
-        # This is POSIX compliant but the arg parser was tripping over it.
-        # In these cases, splitting that item up in separate key and value
-        # elements results in a `cmdline` list that is correctly formatted.
-        if i[0]=='-' and i[1] in known_keys and len(i)>2:
-            yield i[0:2]  # key
-            yield i[2:]  # value
-        else:
-            yield i
 
 def parse_chia_plot_time(s):
     # This will grow to try ISO8601 as well for when Chia logs that way
@@ -152,13 +146,22 @@ class Job:
             # Parse command line args
 <<<<<<< HEAD
             args = self.proc.cmdline()
+            if 'python' in args[0]:
+                args = args[1:]
             assert len(args) > 4
+<<<<<<< HEAD
             assert 'python' in args[0].lower()
             assert 'chia' in args[1]
             assert 'plots' == args[2]
             assert 'create' == args[3]
 <<<<<<< HEAD
             args_iter = iter(cmdline_argfix(args[4:]))
+=======
+            assert 'chia' in args[0]
+            assert 'plots' == args[1]
+            assert 'create' == args[2]
+            args_iter = iter(cmdline_argfix(args[3:]))
+>>>>>>> 1112b3d... add support for chia installed via macOS dmg installer
             for arg in args_iter:
                 val = None if arg in {'-e', '--nobitfield'} else next(args_iter)
                 if arg in {'-k', '--size'}:
