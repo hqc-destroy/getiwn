@@ -43,6 +43,24 @@ def is_plotting_cmdline(cmdline):
 >>>>>>> 1112b3d... add support for chia installed via macOS dmg installer
     )
 
+<<<<<<< HEAD
+=======
+# This is a cmdline argument fix for https://github.com/ericaltendorf/plotman/issues/41
+def cmdline_argfix(cmdline):
+    known_keys = 'krbut2dnea'
+    for i in cmdline:
+        # If the argument starts with dash and a known key and is longer than 2,
+        # then an argument is passed with no space between its key and value.
+        # This is POSIX compliant but the arg parser was tripping over it.
+        # In these cases, splitting that item up in separate key and value
+        # elements results in a `cmdline` list that is correctly formatted.
+        if i[0]=='-' and i[1] in known_keys and len(i)>2:
+            yield i[0:2]  # key
+            yield i[2:]  # value
+        else:
+            yield i
+
+>>>>>>> 9d2a435... fix: support -a, --alt_fingerprint parameter
 def parse_chia_plot_time(s):
     # This will grow to try ISO8601 as well for when Chia logs that way
     return pendulum.from_format(s, 'ddd MMM DD HH:mm:ss YYYY', locale='en', tz=None)
@@ -136,6 +154,9 @@ class Job:
         return jobs
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9d2a435... fix: support -a, --alt_fingerprint parameter
 
     def __init__(self, proc, logroot):
         '''Initialize from an existing psutil.Process object.  must know logroot in order to understand open files'''
@@ -180,7 +201,13 @@ class Job:
                     self.dstdir = val
                 elif arg in {'-n', '--num'}:
                     self.n = val
+<<<<<<< HEAD
                 elif arg in {'-e', '--nobitfield', '-f', '--farmer_public_key', '-p', '--pool_public_key'}:
+=======
+                elif arg in {'-h', '--help'}:
+                    self.help = True
+                elif arg in {'-e', '--nobitfield', '-f', '--farmer_public_key', '-p', '--pool_public_key', '-a', '--alt_fingerprint'}:
+>>>>>>> 9d2a435... fix: support -a, --alt_fingerprint parameter
                     pass
                     # TODO: keep track of these
                 elif arg == '--override-k':
