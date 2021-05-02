@@ -61,6 +61,7 @@ directories:
         # Currently archival depends on an rsync daemon running on the remote
 <<<<<<< HEAD
         # host, and that the module is configured to match the local path.
+<<<<<<< HEAD
         # See https://github.com/ericaltendorf/plotman/wiki/Archiving for details.
 =======
         # host.
@@ -68,6 +69,11 @@ directories:
         # for available directories. Set up ssh keys on the remote host to 
         # allow public key login from rsyncd_user.
 >>>>>>> 8cc44fe... Edit default config to add helpful documentation
+=======
+        # See code for details.
+        #
+        # Complete example: https://github.com/ericaltendorf/plotman/wiki/Archiving
+>>>>>>> 2512be3... Add a link to the Archiving wiki to help new users
         archive:
                 rsyncd_module: plots # Define this in remote rsyncd.conf.
                 rsyncd_path: /plots # This is used via ssh. Should match path 
