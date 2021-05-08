@@ -149,8 +149,14 @@ def main():
             print("No action requested, add 'generate' or 'path'.")
             return
 
+<<<<<<< HEAD
     cfg = configuration.get_validated_configs()
 >>>>>>> 99ad50d... User lower() and while loop
+=======
+    config_path = configuration.get_path()
+    config_text = configuration.read_configuration_text(config_path)
+    cfg = configuration.get_validated_configs(config_text, config_path)
+>>>>>>> 2c2563a... refactor: configuration I/O to the outside
 
     #
     # Stay alive, spawning plot jobs

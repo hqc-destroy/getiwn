@@ -89,7 +89,9 @@ def curses_main(stdscr):
 >>>>>>> 5acc58e... Add validation and fix test
     log = Log()
 
-    cfg = configuration.get_validated_configs()
+    config_path = configuration.get_path()
+    config_text = configuration.read_configuration_text(config_path)
+    cfg = configuration.get_validated_configs(config_text, config_path)
 
     plotting_active = True
     archiving_configured = cfg.directories.archive is not None
